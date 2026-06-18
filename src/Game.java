@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import Cards.*;
 
 public class Game {
-    ArrayList<Card> deck;
-    ArrayList<Card> discard;
+    ArrayList<Card> deck = new ArrayList<>();
+    ArrayList<Card> discard = new ArrayList<>();
     Player player1;
     Player player2;
 
