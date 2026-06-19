@@ -26,4 +26,9 @@ public class Map extends Card{
         return type;
     }
 
+    @Override
+    public String getAbilityString() {
+        return "Map - Draw 3 cards from the discard pile and pick one to add to the play area:";
+    }
+
 }

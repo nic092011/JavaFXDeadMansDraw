@@ -28,6 +28,11 @@ public Image getImage() {
         return type;
     }
 
+    @Override
+    public String getAbilityString() {
+        return "Oracle - See the next card in the deck before drawing";
+    }
+
 }
 
 

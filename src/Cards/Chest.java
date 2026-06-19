@@ -26,4 +26,9 @@ public class Chest extends Card {
         return type;
     }
 
+    @Override
+    public String getAbilityString() {
+        return "Chest - No immediate effect. If banked with a key, draw as many cards from the Discard pile as you moved to your Bank.";
+    }
+
 }

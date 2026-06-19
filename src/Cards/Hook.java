@@ -26,4 +26,10 @@ public class Hook extends Card{
         return type;
     }
 
+    @Override
+    public String getAbilityString() {
+        return "Hook - Select a highest-value card from your Bank:";
+    }
+    
+    
 }

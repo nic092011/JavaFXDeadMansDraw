@@ -8,7 +8,7 @@ public class Mermaid extends Card {
 
         public Mermaid() {
         super(CardType.MERMAID, ImageLoader.MERMAID);
-        this.pointValue += 3;
+        this.pointValue += 5;
     }
 
     @Override
@@ -26,4 +26,8 @@ public Image getImage() {
         return type;
     }
 
+    @Override
+    public String getAbilityString() {
+        return "Mermaid - No effect. But are avereage +5 higher value";
+    }
 }

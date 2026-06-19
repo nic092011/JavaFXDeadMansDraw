@@ -19,7 +19,7 @@ abstract public class Card {
         
         //Generate point Value
         Random random = new Random();
-        this.pointValue = random.nextInt(10) + 1;
+        this.pointValue = random.nextInt(8) + 1;
     }
 
     public abstract Boolean useAbility();
@@ -27,6 +27,12 @@ abstract public class Card {
     public abstract Image getImage();
 
     public abstract CardType getCardType();
+
+    public abstract String getAbilityString();
+
+    public int getPointValue() {
+        return this.pointValue;
+    }
 
 
 }

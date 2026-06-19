@@ -27,4 +27,9 @@ public Image getImage() {
         return type;
     }
 
+    @Override
+    public String getAbilityString() {
+        return "Sword - Steal a card from the other player's Bank and put into your Play Area:";
+    }
+
 }

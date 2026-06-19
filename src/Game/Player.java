@@ -1,6 +1,10 @@
 package Game;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 
@@ -19,29 +23,11 @@ public class Player {
         bank.addAll(playArea);
     }
 
-    public ArrayList<ImageView> printHand() {
-
-        ArrayList<ImageView> handToPrint = new ArrayList<>();
-
-         for (Card  c : hand){
-            Image img = c.getImage();
-
-
-            //image sizes and affects
-            ImageView iView = new ImageView(img); 
-            iView.setFitWidth(100);
-            iView.setFitHeight(150);
-
-
-            handToPrint.add(iView);
-
-        }
-
-        
-        return handToPrint;
-
+     
+    public ArrayList<Card> getHand() {
+        return hand;
     }
 
-    
+
 
 }

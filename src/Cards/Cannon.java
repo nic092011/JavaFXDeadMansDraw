@@ -26,4 +26,9 @@ public class Cannon extends Card {
     public CardType getCardType() {
         return type;
     }
+
+    @Override
+    public String getAbilityString() {
+        return "Cannon - Discards the highest point value card from the opponent bank.";
+    }
 }
