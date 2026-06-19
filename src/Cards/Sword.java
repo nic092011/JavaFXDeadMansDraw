@@ -1,13 +1,13 @@
 package Cards;
 
+import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Sword extends Card {
-        private final Image sword = new Image(getClass().getResource("/images/Sword.png").toExternalForm());
 
 
     public Sword() {
-        super("Sword");
+        super(CardType.SWORD, ImageLoader.SWORD);
     }
 
 
@@ -19,7 +19,12 @@ public class Sword extends Card {
 
     @Override
 public Image getImage() {
-    return sword;
+    return image;
 }
+
+@Override
+    public CardType getCardType() {
+        return type;
+    }
 
 }

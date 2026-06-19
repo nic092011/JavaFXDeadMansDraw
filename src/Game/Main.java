@@ -1,13 +1,11 @@
 package Game;
 
 
-import java.io.File;
 
 import UI.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -31,6 +29,7 @@ public class Main extends Application {
         // Stage is the enite Window
         primaryStage.setTitle("Dead Mans Draw");
 
+        
 
         Scene scene = new Scene(gameView.getRoot(), 700, 700);
         primaryStage.setScene(scene);

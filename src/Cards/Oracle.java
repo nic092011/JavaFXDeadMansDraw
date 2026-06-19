@@ -1,14 +1,14 @@
 package Cards;
 
 
+import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Oracle extends Card{
-        private final Image oracle = new Image(getClass().getResource("/images/Oracle.png").toExternalForm());
 
 
     public Oracle() {
-        super("Oracle");
+        super(CardType.ORACLE, ImageLoader.ORACLE);
     }
 
 
@@ -20,8 +20,13 @@ public class Oracle extends Card{
 
     @Override
 public Image getImage() {
-    return oracle;
+    return image;
 }
+
+@Override
+    public CardType getCardType() {
+        return type;
+    }
 
 }
 

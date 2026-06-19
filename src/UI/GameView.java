@@ -3,6 +3,7 @@ package UI;
 import javafx.scene.control.Label;
 
 import Game.Game;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -19,8 +20,7 @@ public class GameView {
     private HBox p2HandHBox = new HBox(10);
 
     private Button deal = new Button("Deal");
-    private Label p1Label = new Label("Player 1");
-    private Label p2Label = new Label("Player 2");
+ 
 
 
     private Game game;
@@ -49,13 +49,16 @@ public class GameView {
         p1HandHBox.getChildren().addAll(game.getPlayer1().printHand());
         p2HandHBox.getChildren().addAll(game.getPlayer2().printHand());
 
-        //Add Labels to player area
-        p1vbox.getChildren().add(p1Label);
-        p2vbox.getChildren().add(p2Label);
 
         //Add cards HBox to player area
         p1vbox.getChildren().add(p1HandHBox);
         p2vbox.getChildren().add(p2HandHBox);
+
+
+        //Align all vbox and hbox
+
+        p1HandHBox.setAlignment(Pos.CENTER);
+        p2HandHBox.setAlignment(Pos.CENTER);
 
         //Set inside borderPane
         root.setBottom(p1vbox);

@@ -1,13 +1,13 @@
 package Cards;
 
 
+import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Mermaid extends Card {
-        private final Image mermaid = new Image(getClass().getResource("/images/Mermaid.png").toExternalForm());
 
         public Mermaid() {
-        super("Mermaid");
+        super(CardType.MERMAID, ImageLoader.MERMAID);
         this.pointValue += 3;
     }
 
@@ -18,7 +18,12 @@ public class Mermaid extends Card {
 
     @Override
 public Image getImage() {
-    return mermaid;
+    return image;
 }
+
+@Override
+    public CardType getCardType() {
+        return type;
+    }
 
 }

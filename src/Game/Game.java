@@ -17,32 +17,21 @@ public class Game {
         this.player2 = player2;
     }
     public void createDeck() {
+
+        //Create 6 of each card type
         for (int i = 0; i < 7; i++) {
             deck.add(new Sword());
-        }
-        for (int i = 0; i < 7; i++) {
-            deck.add(new Oracle());
-        }
-                for (int i = 0; i < 7; i++) {
             deck.add(new Cannon());
-        }
-                for (int i = 0; i < 7; i++) {
             deck.add(new Chest());
-        }
-                for (int i = 0; i < 7; i++) {
-            deck.add(new Key());
-        }
-                for (int i = 0; i < 7; i++) {
-            deck.add(new Map());
-        }
-                for (int i = 0; i < 7; i++) {
-            deck.add(new Mermaid());
-        }
-                for (int i = 0; i < 7; i++) {
             deck.add(new Hook());
+            deck.add(new Key());
+            deck.add(new Map());
+            deck.add(new Mermaid());
+            deck.add(new Oracle());
+            }
         }
 
-    }
+    
 
     public void shuffleDeck() {
         Collections.shuffle(deck);
@@ -54,8 +43,7 @@ public class Game {
             player2.hand.add(deck.remove(0));
 
         }
- 
-
+        
 
 
     }

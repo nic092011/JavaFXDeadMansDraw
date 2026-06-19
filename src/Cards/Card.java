@@ -8,12 +8,16 @@ import javafx.scene.image.Image;
 
 
 abstract public class Card {
-    String cardSuit;
-    int pointValue;
-    String Image;
-    public Card(String cardSuit) {
-        this.cardSuit = cardSuit;
+
+    protected CardType type;
+    protected int pointValue;
+    protected Image image;
+
+    public Card(CardType type, Image image) {
+        this.type = type;
+        this.image = image;
         
+        //Generate point Value
         Random random = new Random();
         this.pointValue = random.nextInt(10) + 1;
     }
@@ -22,6 +26,7 @@ abstract public class Card {
 
     public abstract Image getImage();
 
+    public abstract CardType getCardType();
 
 
 }

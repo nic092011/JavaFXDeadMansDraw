@@ -2,13 +2,13 @@ package Cards;
 
 
 
+import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Map extends Card{
-        private final Image map = new Image(getClass().getResource("/images/Map.png").toExternalForm());
 
         public Map() {
-        super("Map");
+        super(CardType.MAP, ImageLoader.MAP);
     }
 
     @Override
@@ -18,7 +18,12 @@ public class Map extends Card{
 
     @Override
     public Image getImage() {
-        return map;
+        return image;
+    }
+
+    @Override
+    public CardType getCardType() {
+        return type;
     }
 
 }

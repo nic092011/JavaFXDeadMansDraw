@@ -1,13 +1,13 @@
 package Cards;
 
 
+import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Chest extends Card {
-    private final Image chest = new Image(getClass().getResource("/images/Chest.png").toExternalForm());
 
     public Chest() {
-        super("Chest");
+        super(CardType.CHEST, ImageLoader.CHEST);
     }
 
     @Override
@@ -18,7 +18,12 @@ public class Chest extends Card {
     @Override
     public Image getImage() {
 
-        return chest;
+        return image;
+    }
+
+    @Override
+    public CardType getCardType() {
+        return type;
     }
 
 }
