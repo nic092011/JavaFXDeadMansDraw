@@ -1,4 +1,22 @@
+
+
+# VS Code
 .vscode/
 
-bin/
+# IntelliJ
+.idea
 
+# OS files
+.DS_Store
+
+# Java build output
+bin/
+out/
+*.class
+
+# Misc IDE files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
