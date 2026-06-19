@@ -1,6 +1,12 @@
 package Cards;
 
+
+
+import javafx.scene.image.Image;
+
 public class Hook extends Card{
+        private final Image hook = new Image(getClass().getResource("/images/Hook.png").toExternalForm());
+
         public Hook() {
         super("Hook");
     }
@@ -11,9 +17,8 @@ public class Hook extends Card{
     }
 
     @Override
-    public String getImage() {
-        return "Hook.png";
-
+    public Image getImage() {
+        return hook;
     }
 
 }

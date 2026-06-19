@@ -1,6 +1,12 @@
 package Cards;
 
+
+
+import javafx.scene.image.Image;
+
 public class Cannon extends Card {
+        private final Image cannon = new Image(getClass().getResource("/images/Cannon.png").toExternalForm());
+
     public Cannon() {
         super("Cannon");
     }
@@ -11,8 +17,7 @@ public class Cannon extends Card {
     }
 
     @Override
-    public String getImage() {
-        return "Cannon.png";
-
+    public Image getImage() {
+        return cannon;
     }
 }

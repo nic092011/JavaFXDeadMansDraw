@@ -1,6 +1,11 @@
 package Cards;
 
+
+import javafx.scene.image.Image;
+
 public class Mermaid extends Card {
+        private final Image mermaid = new Image(getClass().getResource("/images/Mermaid.png").toExternalForm());
+
         public Mermaid() {
         super("Mermaid");
         this.pointValue += 3;
@@ -12,9 +17,8 @@ public class Mermaid extends Card {
     }
 
     @Override
-    public String getImage() {
-        return "Mermaid.png";
-
-    }
+public Image getImage() {
+    return mermaid;
+}
 
 }

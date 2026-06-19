@@ -1,6 +1,10 @@
 package Cards;
 
+import javafx.scene.image.Image;
+
 public class Sword extends Card {
+        private final Image sword = new Image(getClass().getResource("/images/Sword.png").toExternalForm());
+
 
     public Sword() {
         super("Sword");
@@ -14,8 +18,8 @@ public class Sword extends Card {
 
 
     @Override
-    public String getImage() {
-        return "Sword.png";
-    }
+public Image getImage() {
+    return sword;
+}
 
 }

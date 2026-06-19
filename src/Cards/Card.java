@@ -2,6 +2,8 @@ package Cards;
 
 import java.util.Random;
 
+import javafx.scene.image.Image;
+
 
 
 
@@ -18,7 +20,7 @@ abstract public class Card {
 
     public abstract Boolean useAbility();
 
-    public abstract String getImage();
+    public abstract Image getImage();
 
 
 

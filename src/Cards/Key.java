@@ -1,6 +1,13 @@
 package Cards;
 
+
+
+import javafx.scene.image.Image;
+
 public class Key extends Card{
+
+    private final Image key = new Image(getClass().getResource("/images/Key.png").toExternalForm());
+
         public Key() {
         super("Key");
     }
@@ -11,9 +18,8 @@ public class Key extends Card{
     }
 
     @Override
-    public String getImage() {
-        return "Key.png";
-
+    public Image getImage() {
+        return key;
     }
 
 }

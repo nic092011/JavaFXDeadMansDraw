@@ -1,4 +1,6 @@
+package Game;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import Cards.*;
 
@@ -42,4 +44,26 @@ public class Game {
 
     }
 
+    public void shuffleDeck() {
+        Collections.shuffle(deck);
+    }
+
+    public void deal() {
+        for (int i = 0; i < 5; i++) {
+            player1.hand.add(deck.remove(0));
+            player2.hand.add(deck.remove(0));
+
+        }
+ 
+
+
+
+    }
+    public Player getPlayer1() {
+        return player1;
+    }
+        public Player getPlayer2() {
+        return player2;
+    }
 }
+

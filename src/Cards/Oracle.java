@@ -1,6 +1,11 @@
 package Cards;
 
+
+import javafx.scene.image.Image;
+
 public class Oracle extends Card{
+        private final Image oracle = new Image(getClass().getResource("/images/Oracle.png").toExternalForm());
+
 
     public Oracle() {
         super("Oracle");
@@ -14,9 +19,9 @@ public class Oracle extends Card{
 
 
     @Override
-    public String getImage() {
-        return "Oracle.png";
-    }
+public Image getImage() {
+    return oracle;
+}
 
 }
 

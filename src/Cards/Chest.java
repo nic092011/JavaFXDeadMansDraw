@@ -1,7 +1,12 @@
 package Cards;
 
-public class Chest extends Card{
-        public Chest() {
+
+import javafx.scene.image.Image;
+
+public class Chest extends Card {
+    private final Image chest = new Image(getClass().getResource("/images/Chest.png").toExternalForm());
+
+    public Chest() {
         super("Chest");
     }
 
@@ -11,9 +16,9 @@ public class Chest extends Card{
     }
 
     @Override
-    public String getImage() {
-        return "Chest.png";
+    public Image getImage() {
 
+        return chest;
     }
 
 }
