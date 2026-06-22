@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -24,6 +25,8 @@ public class GameView {
 
     private HBox p1HandHBox = new HBox(10);
     private HBox p2HandHBox = new HBox(10);
+
+    private HBox playAreaBox = new HBox(10);
 
     private Button deal = new Button("Deal");
 
@@ -48,6 +51,7 @@ public class GameView {
         game.shuffleDeck();
         game.deal();
         showHands();
+        root.getChildren().remove(deal);
     }
 
     // Adds images to Vbox and Hbox
@@ -59,6 +63,7 @@ public class GameView {
 
         for (Card card : game.getPlayer2().getHand()) {
             p2HandHBox.getChildren().add(addCardText(card));
+
         }
 
         // Add cards HBox to player area
@@ -74,10 +79,10 @@ public class GameView {
         root.setBottom(p1vbox);
         root.setTop(p2vbox);
 
+
     }
 
     private StackPane addCardText(Card card) {
-
 
         Image img = card.getImage();
 
@@ -86,7 +91,7 @@ public class GameView {
         iView.setFitWidth(100);
         iView.setFitHeight(150);
 
-        //Create the number Lable
+        // Create the number Lable
         Label number = new Label(String.valueOf(card.getPointValue()));
         number.setStyle(
                 "-fx-text-fill: white;" +
@@ -96,18 +101,33 @@ public class GameView {
                         "-fx-padding: 2px;");
 
         StackPane cardView = new StackPane();
+        cardView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+
         cardView.getChildren().addAll(iView, number);
         StackPane.setAlignment(number, Pos.TOP_LEFT);
 
-
+        // Tooltip is text for onHover
         Tooltip tooltip = new Tooltip(card.getAbilityString());
         Tooltip.install(iView, tooltip);
 
+        // When card is clicked add to play area
+        cardView.setOnMouseClicked(e -> {
+            moveToPlayArea(cardView, card);
+        });
 
         return cardView;
     }
 
- 
+    // After card is picked, Move card to center and remove from players hand
+    public void moveToPlayArea(StackPane cardView, Card card) {
+
+
+        playAreaBox.getChildren().add(cardView);
+        playAreaBox.setAlignment(Pos.CENTER);
+        root.setCenter(playAreaBox);
+        game.getPlayer1().addToPlayArea(card);
+
+    }
 
     public BorderPane getRoot() {
         return root;

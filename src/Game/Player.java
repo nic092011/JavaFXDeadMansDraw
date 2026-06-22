@@ -29,5 +29,12 @@ public class Player {
     }
 
 
+    public void addToPlayArea(Card card) {
+        int index = hand.indexOf(card);
+        playArea.add(hand.remove(index));
+        card.useAbility();
+    }
+
+
 
 }
