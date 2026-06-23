@@ -1,14 +1,14 @@
 package Cards;
 
 
-
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Map extends Card{
 
-        public Map() {
-        super(CardType.MAP, ImageLoader.MAP);
+        public Map(Game game) {
+        super(CardType.MAP, ImageLoader.MAP, game);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package UI;
 
-import java.util.ArrayList;
-
 import Cards.Card;
 import Game.Game;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -27,10 +26,14 @@ public class GameView {
     private HBox p2HandHBox = new HBox(10);
 
     private HBox playAreaBox = new HBox(10);
+    private HBox centerBox = new HBox(10);
 
     private Button deal = new Button("Deal");
 
     private Game game;
+
+    private Label p1TotalPoints = new Label("Bank Points: 0");
+    private Label p2TotalPoints = new Label("Bank Points: 0");
 
     public GameView(Game game) {
 
@@ -51,7 +54,39 @@ public class GameView {
         game.shuffleDeck();
         game.deal();
         showHands();
+        showButtons();
+        showAllLabels();
         root.getChildren().remove(deal);
+    }
+
+    // Show all labels
+    private void showAllLabels() {
+        // p1 bank points
+        p1HandHBox.getChildren().add(p1TotalPoints);
+        p2HandHBox.getChildren().add(p2TotalPoints);
+
+    }
+
+    // show the bank and end turn buttons
+    private void showButtons() {
+
+        // Create and add event listener to bank button
+        Button bankButton = new Button("Add to Bank");
+        bankButton.setOnAction(e -> {
+
+            game.getCurrentPlayer().addToBank();
+            playAreaBox.getChildren().clear();
+
+            // update the current points label
+            updateTotalPoints();
+            game.nextTurn();
+
+        });
+
+        // Add button to players hand area
+        centerBox.setAlignment(Pos.CENTER_RIGHT);
+        centerBox.getChildren().add(bankButton);
+
     }
 
     // Adds images to Vbox and Hbox
@@ -71,7 +106,6 @@ public class GameView {
         p2vbox.getChildren().add(p2HandHBox);
 
         // Align all vbox and hbox
-
         p1HandHBox.setAlignment(Pos.CENTER);
         p2HandHBox.setAlignment(Pos.CENTER);
 
@@ -79,12 +113,13 @@ public class GameView {
         root.setBottom(p1vbox);
         root.setTop(p2vbox);
 
-
     }
 
+    // Add the point value to the card and add tool tip
     private StackPane addCardText(Card card) {
 
         Image img = card.getImage();
+        StackPane cardView = new StackPane();
 
         // image sizes and affects
         ImageView iView = new ImageView(img);
@@ -100,7 +135,6 @@ public class GameView {
                         "-fx-background-color: rgba(0,0,0,0.5);" +
                         "-fx-padding: 2px;");
 
-        StackPane cardView = new StackPane();
         cardView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
         cardView.getChildren().addAll(iView, number);
@@ -121,11 +155,45 @@ public class GameView {
     // After card is picked, Move card to center and remove from players hand
     public void moveToPlayArea(StackPane cardView, Card card) {
 
+        if (!game.getCurrentPlayer().addToPlayArea(card)) {
+            return;
+        }
 
         playAreaBox.getChildren().add(cardView);
         playAreaBox.setAlignment(Pos.CENTER);
-        root.setCenter(playAreaBox);
-        game.getPlayer1().addToPlayArea(card);
+
+        centerBox.getChildren().add(playAreaBox);
+        root.setCenter(centerBox);
+
+    }
+
+    //Alert with parameters title and message
+    public void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    //Method to clear the cards from the play area
+    public void clearPlayArea() {
+        playAreaBox.getChildren().clear();;
+    }
+
+    // show the total points in the bank
+    public void updateTotalPoints() {
+
+        int currentPoints = game.getCurrentPlayer().getBankPoints();
+        int opponentPoints = game.getCurrentOpponent().getBankPoints();
+
+        if (game.getCurrentRound() == 1) {
+            p1TotalPoints.setText("Bank Points: " + String.valueOf(currentPoints));
+            p2TotalPoints.setText("Bank Points: " + String.valueOf(opponentPoints));
+        } else {
+            p2TotalPoints.setText("Bank Points: " + String.valueOf(currentPoints));
+            p1TotalPoints.setText("Bank Points: " + String.valueOf(opponentPoints));
+        }
 
     }
 

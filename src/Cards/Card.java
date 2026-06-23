@@ -3,7 +3,7 @@ package Cards;
 import java.util.Random;
 
 import javafx.scene.image.Image;
-
+import Game.Game;
 
 
 
@@ -12,10 +12,12 @@ abstract public class Card {
     protected CardType type;
     protected int pointValue;
     protected Image image;
+    protected Game game;
 
-    public Card(CardType type, Image image) {
+    public Card(CardType type, Image image, Game game) {
         this.type = type;
         this.image = image;
+        this.game = game;
         
         //Generate point Value
         Random random = new Random();

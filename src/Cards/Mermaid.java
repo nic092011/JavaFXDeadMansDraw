@@ -1,13 +1,13 @@
 package Cards;
 
-
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Mermaid extends Card {
 
-        public Mermaid() {
-        super(CardType.MERMAID, ImageLoader.MERMAID);
+        public Mermaid(Game game) {
+        super(CardType.MERMAID, ImageLoader.MERMAID, game);
         this.pointValue += 5;
     }
 

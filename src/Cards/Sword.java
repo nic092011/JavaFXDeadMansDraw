@@ -1,13 +1,14 @@
 package Cards;
 
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Sword extends Card {
 
 
-    public Sword() {
-        super(CardType.SWORD, ImageLoader.SWORD);
+    public Sword(Game game) {
+        super(CardType.SWORD, ImageLoader.SWORD, game);
     }
 
 

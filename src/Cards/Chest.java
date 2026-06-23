@@ -1,13 +1,13 @@
 package Cards;
 
-
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Chest extends Card {
 
-    public Chest() {
-        super(CardType.CHEST, ImageLoader.CHEST);
+    public Chest(Game game) {
+        super(CardType.CHEST, ImageLoader.CHEST, game);
     }
 
     @Override

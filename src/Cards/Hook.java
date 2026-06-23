@@ -1,14 +1,14 @@
 package Cards;
 
 
-
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Hook extends Card{
 
-        public Hook() {
-        super(CardType.HOOK, ImageLoader.CHEST);
+        public Hook(Game game) {
+        super(CardType.HOOK, ImageLoader.HOOK, game);
     }
 
     @Override

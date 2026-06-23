@@ -11,12 +11,16 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     Button deal = new Button("Deal");
-    Player player1 = new Player();
-    Player player2 = new Player();
 
-    Game game = new Game(player1, player2);
+
+    Game game = new Game();
 
     GameView gameView = new GameView(game);
+    GameUpdater gameUpdater = new GameUpdater(gameView);
+
+
+
+
 
 
     public static void main(String[] args) {
@@ -29,7 +33,7 @@ public class Main extends Application {
         // Stage is the enite Window
         primaryStage.setTitle("Dead Mans Draw");
 
-        
+        game.addGameUpdater(gameUpdater);
 
         Scene scene = new Scene(gameView.getRoot(), 700, 700);
         primaryStage.setScene(scene);

@@ -1,15 +1,15 @@
 package Cards;
 
 
-
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Key extends Card{
 
 
-        public Key() {
-        super(CardType.KEY, ImageLoader.KEY);
+        public Key(Game game) {
+        super(CardType.KEY, ImageLoader.KEY, game);
     }
 
     @Override

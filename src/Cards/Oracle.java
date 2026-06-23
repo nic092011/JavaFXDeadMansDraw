@@ -1,14 +1,14 @@
 package Cards;
 
-
+import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
 
 public class Oracle extends Card{
 
 
-    public Oracle() {
-        super(CardType.ORACLE, ImageLoader.ORACLE);
+    public Oracle(Game game) {
+        super(CardType.ORACLE, ImageLoader.ORACLE, game);
     }
 
 
