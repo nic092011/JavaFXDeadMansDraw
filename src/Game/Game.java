@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import Cards.*;
 
+
 public class Game {
     protected ArrayList<Card> deck = new ArrayList<>();
     protected ArrayList<Card> discard = new ArrayList<>();
@@ -43,8 +44,18 @@ public class Game {
         }
     }
 
+    public void showMapCards(ArrayList<Card> cardsToShow) {
+        gameUpdater.showMapCards(cardsToShow);
+    }
+
     public Card drawCard() {
+        if (deck.size() <= 0) {
+            System.out.println("Game is over");
+        }
         return deck.remove(0);
+    }
+    public ArrayList<Card> getDeck() {
+        return deck;
     }
 
     public void shuffleDeck() {
@@ -75,6 +86,7 @@ public class Game {
 
     }
 
+ 
     public Player getPlayer1() {
         return player1;
     }
@@ -102,5 +114,6 @@ public class Game {
     public int getCurrentRound() {
         return currentRound;
     }
+
 
 }

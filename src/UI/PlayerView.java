@@ -9,15 +9,16 @@ import javafx.scene.layout.HBox;
 
 public class PlayerView {
     private Game game;
-    private GameView gameView;
 
     // Players total points label
     private Label p1TotalPoints = new Label();
     private Label p2TotalPoints = new Label();
 
-    PlayerView(Game game, GameView gameView) {
+    PlayerView(Game game) {
         this.game = game;
-        this.gameView = gameView;
+
+        p1TotalPoints.getStyleClass().add("total-points");
+        p2TotalPoints.getStyleClass().add("total-points");
 
     }
 

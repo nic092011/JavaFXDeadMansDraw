@@ -1,5 +1,7 @@
 package Cards;
 
+import java.util.ArrayList;
+
 import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
@@ -14,6 +16,10 @@ public class Oracle extends Card{
 
     @Override
     public Boolean useAbility() {
+
+        ArrayList<Card> tempCard = new ArrayList<>(game.getDeck().subList(0, 1));
+        game.showMapCards(tempCard);
+
         return true;
     }
 

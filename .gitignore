@@ -3,6 +3,9 @@
 # VS Code
 .vscode/
 
+#Images
+Images/
+
 # IntelliJ
 .idea
 

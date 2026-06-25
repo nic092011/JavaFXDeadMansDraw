@@ -36,6 +36,8 @@ public class Main extends Application {
         game.addGameUpdater(gameUpdater);
 
         Scene scene = new Scene(gameView.getRoot(), 700, 700);
+
+        scene.getStylesheets().add(getClass().getResource("/styles/game.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
 

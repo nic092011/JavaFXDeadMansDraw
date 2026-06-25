@@ -1,0 +1,23 @@
+.turn-label {
+    -fx-font-size: 35px;
+    -fx-font-weight: bold;
+
+}
+
+.total-points {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+.button-style {
+        -fx-background-color: slateblue; -fx-text-fill: white;
+        -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+
+}
+.bank-button {
+        -fx-background-color: rgb(19, 206, 25); -fx-text-fill: white;
+}
+.draw-button {
+        -fx-background-color: rgb(239, 186, 9); -fx-text-fill: white;
+
+}
