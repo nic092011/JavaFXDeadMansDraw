@@ -6,7 +6,6 @@ import Cards.Card;
 
 public class Player {
 
-    private final ArrayList<Card> hand = new ArrayList<>();
     private final ArrayList<Card> bank = new ArrayList<>();
     private final ArrayList<Card> playArea = new ArrayList<>();
     Game game;
@@ -27,9 +26,7 @@ public class Player {
         playArea.clear();
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
+
 
     public ArrayList<Card> getBank() {
         return bank;
@@ -39,20 +36,23 @@ public class Player {
         return playArea;
     }
 
+
+
     // Removes card from hand and adds to play area, and uses card ability
     public boolean addToPlayArea(Card card) {
+
 
         // Check for duplicate card
         for (Card cardCheck : playArea) {
             if (cardCheck.getCardType() == card.getCardType()) {
-
                 duplicateCardError();
+
                 return false;
             }
         }
 
-        int index = hand.indexOf(card);
-        playArea.add(hand.remove(index));
+        playArea.add(card);
+
         card.useAbility();
         return true;
     }
@@ -60,14 +60,10 @@ public class Player {
     // duplicate Card Error when player tries to add duplicate card to play area
     public void duplicateCardError() {
 
-        game.showAlert();
         // move all cards from play area into discard pile
-        for (int index = 0; index < playArea.size(); index++) {
-            game.getDiscard().add(playArea.remove(index));
-        }
+        game.getDiscard().addAll(playArea);
+        playArea.clear();
 
-        // Next players turn
-        game.nextTurn();
     }
 
     // Calculate the points from the play area

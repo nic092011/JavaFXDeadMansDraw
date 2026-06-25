@@ -13,6 +13,7 @@ public class ImageLoader {
     public static final Image MERMAID = load("Mermaid.png");
     public static final Image ORACLE = load("Oracle.png");
     public static final Image CANNON = load("Cannon.png");
+    public static final Image BACK = load("Back.jpg");
     
 
         private static Image load(String path) {

@@ -46,10 +46,7 @@ public class CardView {
         Tooltip tooltip = new Tooltip(card.getAbilityString());
         Tooltip.install(iView, tooltip);
 
-        // When card is clicked add to play area
-        cardPane.setOnMouseClicked(e -> {
-            gameView.moveToPlayArea(cardPane, card);
-        });
+        
 
         return cardPane;
     }

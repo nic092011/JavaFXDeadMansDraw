@@ -5,9 +5,14 @@ import Game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 //Displays the play area section. Creates player and card views
 public class GameView {
@@ -18,7 +23,10 @@ public class GameView {
     private HBox playAreaBox = new HBox(10);
     private HBox centerBox = new HBox(10);
 
+    private VBox centerVBox = new VBox(10);
+
     private Button deal = new Button("Deal");
+    private Button drawButton = new Button("Draw Card");
 
     private Game game;
     private PlayerView playerView;
@@ -27,6 +35,8 @@ public class GameView {
     private HBox p1HandHBox = new HBox(10);
 
     private HBox p2HandHBox = new HBox(10);
+    private Label turnLabel = new Label("Player 1's Turn");
+    private Font titleFont = Font.font("Arial", 26);
 
     public GameView(Game game) {
 
@@ -40,6 +50,8 @@ public class GameView {
         this.cardView = new CardView(this);
 
         deal.setOnAction(e -> dealCards());
+
+        turnLabel.setFont(titleFont);
     }
 
     // Creates and Shuffles Deck and displayes hand
@@ -47,22 +59,59 @@ public class GameView {
 
         game.createDeck();
         game.shuffleDeck();
-        //Give each player 5 cards
-        game.deal();
-        //Add each hand to the screen
-        showHands();
+
+        showDrawButton();
         showBankButton();
-        playerView.showPlayerPoints(p1HandHBox, p2HandHBox);
+        showDeck();
+        playerView.showPlayerPoints(p1HandHBox, p2HandHBox, root);
         root.getChildren().remove(deal);
+        centerVBox.getChildren().add(turnLabel);
+
+        centerVBox.getChildren().add(centerBox);
+        root.setCenter(centerVBox);
+        centerVBox.setAlignment(Pos.CENTER);
+
     }
 
-    private void showHands() {
-        p1HandHBox = playerView.showHands(1, p1HandHBox);
-        p2HandHBox = playerView.showHands(2, p2HandHBox);
-        
-        root.setBottom(p1HandHBox);
+    private void showDeck() {
+        Image img = ImageLoader.BACK;
+        ImageView imageView = new ImageView(img);
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(150);
 
-        root.setTop(p2HandHBox);
+        centerBox.getChildren().add(imageView);
+        centerBox.setAlignment(Pos.CENTER);
+
+        centerBox.getChildren().add(playAreaBox);
+
+
+    }
+
+    private void showDrawButton() {
+        centerBox.getChildren().add(drawButton);
+
+        drawButton.setOnAction(e -> {
+            Card drawn = game.drawCard();
+
+            StackPane cardPane = cardView.addCardText(drawn);
+            moveToPlayArea(cardPane);
+
+            boolean succesful = game.getCurrentPlayer().addToPlayArea(drawn);
+
+            if(!succesful) {
+                game.showAlert();
+                game.nextTurn();
+                updateTurnLabel();
+            }
+
+
+        });
+    }
+
+    private void updateTurnLabel() {
+        String player = String.valueOf(game.getCurrentRound());
+        turnLabel.setText("Player " + player + "'s Turn");
+        
     }
 
     // show the bank button
@@ -79,6 +128,7 @@ public class GameView {
             playerView.updatePointLabel(1, p1HandHBox);
             playerView.updatePointLabel(2, p2HandHBox);
             game.nextTurn();
+            updateTurnLabel();
 
         });
 
@@ -89,17 +139,12 @@ public class GameView {
     }
 
     // After card is picked, Move card to center and remove from players hand
-    public void moveToPlayArea(StackPane cardPane, Card card) {
+    public void moveToPlayArea(StackPane cardPane) {
 
-        if (!game.getCurrentPlayer().addToPlayArea(card)) {
-            return;
-        }
 
         playAreaBox.getChildren().add(cardPane);
         playAreaBox.setAlignment(Pos.CENTER);
 
-        centerBox.getChildren().add(playAreaBox);
-        root.setCenter(centerBox);
 
     }
 
@@ -115,7 +160,7 @@ public class GameView {
     // Method to clear the cards from the play area
     public void clearPlayArea() {
         playAreaBox.getChildren().clear();
-        
+
     }
 
     public CardView getCardView() {
