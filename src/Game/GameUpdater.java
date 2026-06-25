@@ -11,7 +11,7 @@ public class GameUpdater {
     }
 
     public void updateTotalPoints() {
-        gameView.updateTotalPoints();
+        gameView.updatePlayerPoints();
     }
 
     public void duplicateAlert() {
