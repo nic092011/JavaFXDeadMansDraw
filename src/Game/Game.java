@@ -44,8 +44,8 @@ public class Game {
         }
     }
 
-    public void showMapCards(ArrayList<Card> cardsToShow) {
-        gameUpdater.showMapCards(cardsToShow);
+    public void showNextCards(ArrayList<Card> cardsToShow) {
+        gameUpdater.showNextCards(cardsToShow);
     }
 
     public Card drawCard() {

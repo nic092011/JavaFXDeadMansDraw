@@ -18,7 +18,7 @@ public class Oracle extends Card{
     public Boolean useAbility() {
 
         ArrayList<Card> tempCard = new ArrayList<>(game.getDeck().subList(0, 1));
-        game.showMapCards(tempCard);
+        game.showNextCards(tempCard);
 
         return true;
     }

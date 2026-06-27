@@ -1,9 +1,9 @@
 package UI;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Cards.Card;
+import Cards.CardType;
 import Game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -25,11 +25,15 @@ public class GameView {
     private HBox playAreaBox = new HBox(10);
     private HBox centerButtonBox = new HBox(10);
     private HBox centerImageBox = new HBox(10);
+    private HBox tempCards = new HBox(10);
+
 
     private VBox centerVBox = new VBox(10);
 
     private Button deal = new Button("Deal");
     private Button drawButton = new Button("Draw Card");
+    private Button bankButton = new Button("Add to Bank");
+
 
     private Game game;
     private PlayerView playerView;
@@ -109,6 +113,10 @@ public class GameView {
         centerButtonBox.getChildren().add(drawButton);
 
         drawButton.setOnAction(e -> {
+            //when temp cards are displayed then remove when clicked
+            centerVBox.getChildren().remove(tempCards);
+
+
             Card drawn = game.drawCard();
 
             StackPane cardPane = cardView.addCardText(drawn);
@@ -136,11 +144,13 @@ public class GameView {
     private void showBankButton() {
 
         // Create and add event listener to bank button
-        Button bankButton = new Button("Add to Bank");
         bankButton.getStyleClass().addAll("button-style", "bank-button");
         
 
         bankButton.setOnAction(e -> {
+            //when temp cards are displayed then remove when clicked
+            centerVBox.getChildren().remove(tempCards);
+
 
             game.getCurrentPlayer().addToBank();
             playAreaBox.getChildren().clear();
@@ -180,12 +190,21 @@ public class GameView {
 
     //Print a list of Cards to the view
     public void showCards(ArrayList<Card> cardsToShow){
-        HBox tempCards = new HBox(10);
+
+
 
         for (Card card : cardsToShow) {
             //Add to play area when card is clicked
             StackPane cardPane = cardView.addCardText(card);
-
+        //If last card drawn is oracle then it does not have to be clickable
+        if (game.getCurrentPlayer().getLastCardType() == CardType.ORACLE) {
+            Label nextCardLabel = new Label("Oracle see's a " + card.getCardType() + ". Draw next card or Add to Bank?");
+            centerVBox.getChildren().add(nextCardLabel);
+            
+            
+            
+        } else {
+            //If card is clicked then move to play area
             cardPane.setOnMouseClicked(e -> {
                 moveToPlayArea(cardPane);
                 boolean succesful = game.getCurrentPlayer().addToPlayArea(card);
@@ -200,6 +219,7 @@ public class GameView {
             centerVBox.getChildren().remove(tempCards);
 
             });
+        }
 
             tempCards.getChildren().add(cardPane);
         }

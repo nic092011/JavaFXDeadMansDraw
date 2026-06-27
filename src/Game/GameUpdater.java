@@ -22,7 +22,7 @@ public class GameUpdater {
         gameView.clearPlayArea();
     }
 
-    public void showMapCards(ArrayList<Card> cardsToShow) {
+    public void showNextCards(ArrayList<Card> cardsToShow) {
         gameView.showCards(cardsToShow);
     }
 

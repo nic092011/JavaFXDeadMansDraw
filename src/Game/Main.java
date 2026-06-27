@@ -2,6 +2,8 @@ package Game;
 
 
 
+import java.io.File;
+
 import UI.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,15 +31,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        // Stage is the enite Window
+System.out.println(java.nio.file.Files.exists(
+    java.nio.file.Paths.get("src/styles/game.css")   ));     // Stage is the enite Window
         primaryStage.setTitle("Dead Mans Draw");
 
         game.addGameUpdater(gameUpdater);
 
         Scene scene = new Scene(gameView.getRoot(), 700, 700);
 
-        scene.getStylesheets().add(getClass().getResource("/styles/game.css").toExternalForm());
+        scene.getStylesheets().add(
+    new File("src/Styles/game.css").toURI().toString()
+);
+        //scene.getStylesheets().add(getClass().getResource("src/Styles/game.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
 

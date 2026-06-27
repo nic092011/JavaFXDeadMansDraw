@@ -31,7 +31,7 @@ public class Map extends Card{
 
         ArrayList<Card> mapList = new ArrayList<Card>(discard.subList(0, end) );
 
-        game.showMapCards(mapList);
+        game.showNextCards(mapList);
         return true;
     }
 

@@ -3,6 +3,7 @@ package Game;
 import java.util.ArrayList;
 
 import Cards.Card;
+import Cards.CardType;
 
 public class Player {
 
@@ -83,6 +84,10 @@ public class Player {
     public void subtractBankPoints(int pointValue) {
         bankPoints -= pointValue;
 
+    }
+
+    public CardType getLastCardType() {
+        return playArea.get(playArea.size() - 1).getCardType();
     }
 
 }
