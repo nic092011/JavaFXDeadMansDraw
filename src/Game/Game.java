@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import Cards.*;
-
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Game {
     protected ArrayList<Card> deck = new ArrayList<>();
@@ -17,6 +23,7 @@ public class Game {
 
     // 1 means its player1s turn and 2 means its player2s turn
     private int currentRound = 1;
+    private Stage stage;
 
     public Game() {
         this.player1 = new Player(this);
@@ -50,10 +57,12 @@ public class Game {
 
     public Card drawCard() {
         if (deck.size() <= 0) {
-            System.out.println("Game is over");
+            gameOver();
+            return null;
         }
         return deck.remove(0);
     }
+
     public ArrayList<Card> getDeck() {
         return deck;
     }
@@ -86,7 +95,45 @@ public class Game {
 
     }
 
- 
+    public void gameOver() {
+        VBox root = new VBox(20);
+        root.setAlignment(Pos.CENTER);
+
+        Label gameOver = new Label("Game Over");
+        gameOver.setStyle("-fx-font-size: 32px; -fx-font-weight: bold;");
+
+        Label winner = new Label(getWinnerText());
+        winner.setStyle("-fx-font-size: 20px;");
+
+        Button playAgain = new Button("Play Again");
+        // playAgain.setOnAction(e -> restartGame());
+
+        Button quit = new Button("Quit");
+        quit.setOnAction(e -> Platform.exit());
+
+        root.getChildren().addAll(gameOver, winner, playAgain, quit);
+
+        Scene gameOverScene = new Scene(root, 1200, 800);
+        stage.setScene(gameOverScene);
+
+    }
+
+    private String getWinnerText() {
+
+        int p1Points = player1.getBankPoints();
+        int p2Points = player2.getBankPoints();
+
+        if (p1Points > p2Points) {
+            return "Winner: Player 1 (" + p1Points + " points)";
+        }
+
+        if (p2Points > p1Points) {
+            return "Winner: Player 2 (" + p2Points + " points)";
+        }
+
+        return "It's a draw! Both players scored " + p1Points + " points.";
+    }
+
     public Player getPlayer1() {
         return player1;
     }
@@ -115,5 +162,8 @@ public class Game {
         return currentRound;
     }
 
+    public void giveStage(Stage scene) {
+        this.stage = scene;
+    }
 
 }

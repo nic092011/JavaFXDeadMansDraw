@@ -1,5 +1,8 @@
 package Cards;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import Game.Game;
 import UI.ImageLoader;
 import javafx.scene.image.Image;
@@ -14,6 +17,24 @@ public class Sword extends Card {
 
     @Override
     public Boolean useAbility() {
+        HashMap<CardType, Card> highestCards = new HashMap<>();
+        ArrayList<Card> cardsFromBank = new ArrayList<>();
+        // for each card in bank
+        for (Card card : game.getCurrentOpponent().getBank()) {
+            CardType type = card.getCardType();
+
+            //check if card type is present and if point value is higher
+            if (!highestCards.containsKey(type) || card.getPointValue() > highestCards.get(type).getPointValue()) {
+                highestCards.put(type, card);
+            }
+            
+
+        }
+        cardsFromBank.addAll(highestCards.values());
+
+
+
+        game.showNextCards(cardsFromBank);
         return true;
     }
 

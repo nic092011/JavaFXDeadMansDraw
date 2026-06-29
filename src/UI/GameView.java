@@ -27,13 +27,12 @@ public class GameView {
     private HBox centerImageBox = new HBox(10);
     private HBox tempCards = new HBox(10);
 
-
     private VBox centerVBox = new VBox(10);
+    private VBox labelVBox = new VBox();
 
     private Button deal = new Button("Deal");
     private Button drawButton = new Button("Draw Card");
     private Button bankButton = new Button("Add to Bank");
-
 
     private Game game;
     private PlayerView playerView;
@@ -44,6 +43,7 @@ public class GameView {
     private HBox p2HandHBox = new HBox(10);
     private Label turnLabel = new Label("Player 1's Turn");
 
+    private Label nextCardLabel;
 
     public GameView(Game game) {
 
@@ -58,18 +58,10 @@ public class GameView {
 
         deal.setOnAction(e -> dealCards());
 
-
-        //Add styles to labels and buttons
+        // Add styles to labels and buttons
         turnLabel.getStyleClass().add("turn-label");
         deal.getStyleClass().add("button-style");
         drawButton.getStyleClass().addAll("button-style", "draw-button");
-
-
-        
-
-
-
-
 
     }
 
@@ -79,22 +71,21 @@ public class GameView {
         game.createDeck();
         game.shuffleDeck();
 
-        //Show UI buttons and images
+        // Show UI buttons and images
         showDrawButton();
         showBankButton();
         showDeck();
         playerView.showPlayerPoints(p1HandHBox, p2HandHBox, root);
         root.getChildren().remove(deal);
 
-        
-        centerVBox.getChildren().addAll(turnLabel, centerImageBox, centerButtonBox);
+        centerVBox.getChildren().addAll(turnLabel, labelVBox, centerImageBox, centerButtonBox);
+        CardAbilityView.addLabelToScreen(labelVBox);
         root.setCenter(centerVBox);
         centerVBox.setAlignment(Pos.CENTER);
 
-
     }
 
-    //Get back of card image and add to center Image Box
+    // Get back of card image and add to center Image Box
     private void showDeck() {
         Image img = ImageLoader.BACK;
         ImageView imageView = new ImageView(img);
@@ -106,51 +97,60 @@ public class GameView {
 
         centerImageBox.getChildren().add(playAreaBox);
 
-
     }
 
     private void showDrawButton() {
         centerButtonBox.getChildren().add(drawButton);
 
         drawButton.setOnAction(e -> {
-            //when temp cards are displayed then remove when clicked
-            centerVBox.getChildren().remove(tempCards);
-
+            // when temp cards are displayed then remove when clicked
+            removeTempCards();
 
             Card drawn = game.drawCard();
 
             StackPane cardPane = cardView.addCardText(drawn);
-            moveToPlayArea(cardPane);
+            
+            moveToPlayArea(cardPane, drawn);
 
-            boolean succesful = game.getCurrentPlayer().addToPlayArea(drawn);
-
-            if(!succesful) {
-                game.showAlert();
-                game.nextTurn();
-                updateTurnLabel();
-            }
+            checkIfPlayable(drawn);
 
 
         });
     }
 
-    private void updateTurnLabel() {
-    String player = String.valueOf(game.getCurrentRound());
-    turnLabel.setText("Player " + player + "'s Turn");
+    private void checkIfPlayable(Card card) {
+            boolean succesful = game.getCurrentPlayer().addToPlayArea(card);
 
-}
+            if (!succesful) {
+                game.showAlert();
+                game.nextTurn();
+                CardAbilityView.clearLabel();
+                updateTurnLabel();
+            }
+    }
+
+    // Removes the temp cards displayed by card abilities
+    private void removeTempCards() {
+        centerVBox.getChildren().remove(tempCards);
+        tempCards.getChildren().clear();
+        centerVBox.getChildren().remove(nextCardLabel);
+    }
+
+    private void updateTurnLabel() {
+        String player = String.valueOf(game.getCurrentRound());
+        turnLabel.setText("Player " + player + "'s Turn");
+
+    }
 
     // show the bank button
     private void showBankButton() {
 
         // Create and add event listener to bank button
         bankButton.getStyleClass().addAll("button-style", "bank-button");
-        
 
         bankButton.setOnAction(e -> {
-            //when temp cards are displayed then remove when clicked
-            centerVBox.getChildren().remove(tempCards);
-
+            // when temp cards are displayed then remove when clicked
+            removeTempCards();
 
             game.getCurrentPlayer().addToBank();
             playAreaBox.getChildren().clear();
@@ -159,6 +159,7 @@ public class GameView {
             playerView.updatePointLabel(1, p1HandHBox);
             playerView.updatePointLabel(2, p2HandHBox);
             game.nextTurn();
+            CardAbilityView.clearLabel();
             updateTurnLabel();
 
         });
@@ -170,12 +171,12 @@ public class GameView {
     }
 
     // After card is picked, Move card to center and remove from players hand
-    public void moveToPlayArea(StackPane cardPane) {
+    public void moveToPlayArea(StackPane cardPane, Card card) {
 
+        CardAbilityView.showAbility(labelVBox, card);
 
         playAreaBox.getChildren().add(cardPane);
         playAreaBox.setAlignment(Pos.CENTER);
-
 
     }
 
@@ -188,38 +189,30 @@ public class GameView {
         alert.showAndWait();
     }
 
-    //Print a list of Cards to the view
-    public void showCards(ArrayList<Card> cardsToShow){
-
-
+    // Print a list of Cards to the view
+    public void showCards(ArrayList<Card> cardsToShow) {
 
         for (Card card : cardsToShow) {
-            //Add to play area when card is clicked
+            // Add to play area when card is clicked
             StackPane cardPane = cardView.addCardText(card);
-        //If last card drawn is oracle then it does not have to be clickable
-        if (game.getCurrentPlayer().getLastCardType() == CardType.ORACLE) {
-            Label nextCardLabel = new Label("Oracle see's a " + card.getCardType() + ". Draw next card or Add to Bank?");
-            centerVBox.getChildren().add(nextCardLabel);
-            
-            
-            
-        } else {
-            //If card is clicked then move to play area
-            cardPane.setOnMouseClicked(e -> {
-                moveToPlayArea(cardPane);
-                boolean succesful = game.getCurrentPlayer().addToPlayArea(card);
+            // If last card drawn is oracle then it does not have to be clickable
+            if (game.getCurrentPlayer().getLastCardType() == CardType.ORACLE) {
 
-            if(!succesful) {
-                game.showAlert();
-                game.nextTurn();
-                updateTurnLabel();
+                nextCardLabel = new Label("Oracle see's a " + card.getCardType() + ". Draw next card or Add to Bank?");
+                centerVBox.getChildren().add(nextCardLabel);
+
+            } else {
+                // If card is clicked then move to play area
+                cardPane.setOnMouseClicked(e -> {
+                    removeTempCards();
+                    moveToPlayArea(cardPane, card);
+                    checkIfPlayable(card);
+                    game.getDiscard().remove(card);
+
+
+
+                });
             }
-            game.getDiscard().remove(card);
-
-            centerVBox.getChildren().remove(tempCards);
-
-            });
-        }
 
             tempCards.getChildren().add(cardPane);
         }

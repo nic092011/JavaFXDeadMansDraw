@@ -39,7 +39,7 @@ public class Player {
 
 
 
-    // Removes card from hand and adds to play area, and uses card ability
+    // Adds card to play area, uses card ability. displays card ability
     public boolean addToPlayArea(Card card) {
 
 
@@ -55,6 +55,7 @@ public class Player {
         playArea.add(card);
 
         card.useAbility();
+
         return true;
     }
 
