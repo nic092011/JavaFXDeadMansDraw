@@ -26,6 +26,7 @@ public class GameView {
     private HBox centerButtonBox = new HBox(10);
     private HBox centerImageBox = new HBox(10);
     private HBox tempCards = new HBox(10);
+    
 
     private VBox centerVBox = new VBox(10);
     private VBox labelVBox = new VBox();
@@ -39,11 +40,13 @@ public class GameView {
     private CardView cardView;
 
     private HBox p1HandHBox = new HBox(10);
-
     private HBox p2HandHBox = new HBox(10);
     private Label turnLabel = new Label("Player 1's Turn");
 
     private Label nextCardLabel;
+
+    private VBox cardCountVBox = new VBox();
+    private Label deckCountLabel;
 
     public GameView(Game game) {
 
@@ -79,9 +82,18 @@ public class GameView {
         root.getChildren().remove(deal);
 
         centerVBox.getChildren().addAll(turnLabel, labelVBox, centerImageBox, centerButtonBox);
+        
+        //deck count label
+        deckCountLabel = new Label();
+        root.setRight(cardCountVBox);
+        cardCountVBox.getChildren().add(deckCountLabel);
+
         CardAbilityView.addLabelToScreen(labelVBox);
         root.setCenter(centerVBox);
         centerVBox.setAlignment(Pos.CENTER);
+
+        tempCards.setMinHeight(250);
+
 
     }
 
@@ -131,7 +143,6 @@ public class GameView {
 
     // Removes the temp cards displayed by card abilities
     private void removeTempCards() {
-        centerVBox.getChildren().remove(tempCards);
         tempCards.getChildren().clear();
         centerVBox.getChildren().remove(nextCardLabel);
     }
@@ -172,6 +183,9 @@ public class GameView {
 
     // After card is picked, Move card to center and remove from players hand
     public void moveToPlayArea(StackPane cardPane, Card card) {
+
+        //Update the deck count
+        deckCountLabel.setText("Cards in deck: " + game.getDeck().size());
 
         CardAbilityView.showAbility(labelVBox, card);
 
