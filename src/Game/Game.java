@@ -134,6 +134,8 @@ public class Game {
         return "It's a draw! Both players scored " + p1Points + " points.";
     }
 
+
+
     public Player getPlayer1() {
         return player1;
     }

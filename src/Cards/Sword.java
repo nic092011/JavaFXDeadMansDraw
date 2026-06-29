@@ -19,7 +19,7 @@ public class Sword extends Card {
     public Boolean useAbility() {
         HashMap<CardType, Card> highestCards = new HashMap<>();
         ArrayList<Card> cardsFromBank = new ArrayList<>();
-        // for each card in bank
+        // for each card in opponents bank
         for (Card card : game.getCurrentOpponent().getBank()) {
             CardType type = card.getCardType();
 
@@ -31,6 +31,7 @@ public class Sword extends Card {
 
         }
         cardsFromBank.addAll(highestCards.values());
+        
 
 
 

@@ -25,8 +25,8 @@ public class CardView {
 
         // image sizes and affects
         ImageView iView = new ImageView(img);
-        iView.setFitWidth(100);
-        iView.setFitHeight(150);
+        iView.setFitWidth(150);
+        iView.setFitHeight(225);
 
         // Create the number Lable
         Label number = new Label(String.valueOf(card.getPointValue()));

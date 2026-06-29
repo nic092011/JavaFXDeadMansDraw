@@ -31,7 +31,7 @@ public class Cannon extends Card {
             game.getDiscard().add(highestCard);
         } 
 
-        game.getCurrentOpponent().subtractBankPoints(highestCard.getPointValue());
+        game.getCurrentOpponent().getBankPoints();
         game.updateScore();
         return true;
     }

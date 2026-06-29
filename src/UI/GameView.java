@@ -89,8 +89,8 @@ public class GameView {
     private void showDeck() {
         Image img = ImageLoader.BACK;
         ImageView imageView = new ImageView(img);
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(150);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(225);
 
         centerImageBox.getChildren().add(imageView);
         centerImageBox.setAlignment(Pos.CENTER);
@@ -201,9 +201,20 @@ public class GameView {
                 nextCardLabel = new Label("Oracle see's a " + card.getCardType() + ". Draw next card or Add to Bank?");
                 centerVBox.getChildren().add(nextCardLabel);
 
-            } else {
+            } 
+            else {
                 // If card is clicked then move to play area
                 cardPane.setOnMouseClicked(e -> {
+
+                    //if card is the sword, needs to be removed from opponents bank
+                    if (game.getCurrentPlayer().getLastCardType() == CardType.SWORD) {
+                        game.getCurrentOpponent().getBank().remove(card);
+                    }
+
+                    //if card is hook, remove for your bank
+                    if (game.getCurrentPlayer().getLastCardType() == CardType.HOOK) {
+                        game.getCurrentPlayer().getBank().remove(card);
+                    }
                     removeTempCards();
                     moveToPlayArea(cardPane, card);
                     checkIfPlayable(card);

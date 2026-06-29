@@ -21,13 +21,45 @@ public class Player {
 
     // Add playarea cards to bank and remove from playArea
     public void addToBank() {
+
+        checkChestnKey();
+        
         bank.addAll(playArea);
-        bankPoints += getPlayAreaPoints();
+        getBankPoints();
 
         playArea.clear();
     }
 
+    //if chest and key in is banked. Take from discard number of cards you banked 
+    private boolean checkChestnKey() {
+        boolean chest = false;
+        boolean key = false;
+        for (Card card : playArea) {
+            if (card.getCardType() == CardType.CHEST) {
+                chest = true;
+            }
+            if (card.getCardType() == CardType.KEY) {
+                key = true;
+            }
+        }
 
+        if (chest && key) {
+
+            int cardCount = playArea.size() >= game.discard.size() ? game.discard.size() : playArea.size();
+            if(game.getDiscard().size() < 1) {
+                return false;
+            }
+            for (int i = 0; i < cardCount; i++) {
+                bank.add(game.getDiscard().remove(0));
+                game.updateScore();
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
 
     public ArrayList<Card> getBank() {
         return bank;
@@ -37,11 +69,8 @@ public class Player {
         return playArea;
     }
 
-
-
     // Adds card to play area, uses card ability. displays card ability
     public boolean addToPlayArea(Card card) {
-
 
         // Check for duplicate card
         for (Card cardCheck : playArea) {
@@ -68,27 +97,20 @@ public class Player {
 
     }
 
-    // Calculate the points from the play area
-    // NEED TO CHECK FOR CHEST AND KEY
-    public int getPlayAreaPoints() {
-        int points = 0;
-        for (Card card : playArea) {
-            points += card.getPointValue();
-        }
-        return points;
-    }
 
     public int getBankPoints() {
+        int points = 0;
+        for (Card card : bank) {
+            points += card.getPointValue();
+
+        }
+        bankPoints = points;
         return bankPoints;
     }
 
-    public void subtractBankPoints(int pointValue) {
-        bankPoints -= pointValue;
-
-    }
+    
 
     public CardType getLastCardType() {
         return playArea.get(playArea.size() - 1).getCardType();
     }
-
 }
