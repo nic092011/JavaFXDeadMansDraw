@@ -62,8 +62,8 @@ public class PlayerView {
 
             Image img = card.getImage();
             ImageView iView = new ImageView(img);
-            iView.setFitWidth(50);
-            iView.setFitHeight(100);
+            iView.setFitWidth(40);
+            iView.setFitHeight(50);
             bankHBox.getChildren().add(iView);
 
         }

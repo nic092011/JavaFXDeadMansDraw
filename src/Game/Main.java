@@ -1,6 +1,5 @@
 package Game;
 
-import java.io.File;
 
 import UI.GameView;
 import javafx.application.Application;

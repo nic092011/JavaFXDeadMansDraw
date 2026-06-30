@@ -9,6 +9,11 @@
     -fx-font-weight: bold;
 }
 
+.oracle-label {
+        -fx-font-size: 15px;
+        -fx-font-weight: bold;
+}
+
 .button-style {
         -fx-background-color: slateblue; -fx-text-fill: white;
         -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );

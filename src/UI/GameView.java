@@ -26,7 +26,6 @@ public class GameView {
     private HBox centerButtonBox = new HBox(10);
     private HBox centerImageBox = new HBox(10);
     private HBox tempCards = new HBox(10);
-    
 
     private VBox centerVBox = new VBox(10);
     private VBox labelVBox = new VBox();
@@ -47,6 +46,8 @@ public class GameView {
 
     private VBox cardCountVBox = new VBox();
     private Label deckCountLabel;
+
+    private StackPane cardPane;
 
     public GameView(Game game) {
 
@@ -82,8 +83,8 @@ public class GameView {
         root.getChildren().remove(deal);
 
         centerVBox.getChildren().addAll(turnLabel, labelVBox, centerImageBox, centerButtonBox);
-        
-        //deck count label
+
+        // deck count label
         deckCountLabel = new Label();
         root.setRight(cardCountVBox);
         cardCountVBox.getChildren().add(deckCountLabel);
@@ -93,7 +94,6 @@ public class GameView {
         centerVBox.setAlignment(Pos.CENTER);
 
         tempCards.setMinHeight(250);
-
 
     }
 
@@ -120,25 +120,24 @@ public class GameView {
 
             Card drawn = game.drawCard();
 
-            StackPane cardPane = cardView.addCardText(drawn);
-            
+            cardPane = cardView.addCardText(drawn);
+
             moveToPlayArea(cardPane, drawn);
 
             checkIfPlayable(drawn);
-
 
         });
     }
 
     private void checkIfPlayable(Card card) {
-            boolean succesful = game.getCurrentPlayer().addToPlayArea(card);
+        boolean succesful = game.getCurrentPlayer().addToPlayArea(card);
 
-            if (!succesful) {
-                game.showAlert();
-                game.nextTurn();
-                CardAbilityView.clearLabel();
-                updateTurnLabel();
-            }
+        if (!succesful) {
+            game.showAlert();
+            game.nextTurn();
+            CardAbilityView.clearLabel();
+            updateTurnLabel();
+        }
     }
 
     // Removes the temp cards displayed by card abilities
@@ -160,7 +159,17 @@ public class GameView {
         bankButton.getStyleClass().addAll("button-style", "bank-button");
 
         bankButton.setOnAction(e -> {
+            HBox tempBox;
             // when temp cards are displayed then remove when clicked
+            if (game.getCurrentPlayer().equals(game.getPlayer1())) {
+                 tempBox = p1HandHBox;
+            } else {
+                 tempBox = p2HandHBox;
+            }
+
+            //Animation only moves one card.
+            //Animations.addToBank(cardPane, playAreaBox, tempBox, () -> {
+
             removeTempCards();
 
             game.getCurrentPlayer().addToBank();
@@ -172,6 +181,7 @@ public class GameView {
             game.nextTurn();
             CardAbilityView.clearLabel();
             updateTurnLabel();
+            //});
 
         });
 
@@ -184,11 +194,14 @@ public class GameView {
     // After card is picked, Move card to center and remove from players hand
     public void moveToPlayArea(StackPane cardPane, Card card) {
 
-        //Update the deck count
+        // Update the deck count
         deckCountLabel.setText("Cards in deck: " + game.getDeck().size());
 
         CardAbilityView.showAbility(labelVBox, card);
 
+        Animations.cardFromDeck(cardPane);
+
+        
         playAreaBox.getChildren().add(cardPane);
         playAreaBox.setAlignment(Pos.CENTER);
 
@@ -213,19 +226,19 @@ public class GameView {
             if (game.getCurrentPlayer().getLastCardType() == CardType.ORACLE) {
 
                 nextCardLabel = new Label("Oracle see's a " + card.getCardType() + ". Draw next card or Add to Bank?");
-                centerVBox.getChildren().add(nextCardLabel);
+                nextCardLabel.getStyleClass().add("oracle-label");
+                centerVBox.getChildren().add(4, nextCardLabel);
 
-            } 
-            else {
+            } else {
                 // If card is clicked then move to play area
                 cardPane.setOnMouseClicked(e -> {
 
-                    //if card is the sword, needs to be removed from opponents bank
+                    // if card is the sword, needs to be removed from opponents bank
                     if (game.getCurrentPlayer().getLastCardType() == CardType.SWORD) {
                         game.getCurrentOpponent().getBank().remove(card);
                     }
 
-                    //if card is hook, remove for your bank
+                    // if card is hook, remove for your bank
                     if (game.getCurrentPlayer().getLastCardType() == CardType.HOOK) {
                         game.getCurrentPlayer().getBank().remove(card);
                     }
@@ -233,8 +246,6 @@ public class GameView {
                     moveToPlayArea(cardPane, card);
                     checkIfPlayable(card);
                     game.getDiscard().remove(card);
-
-
 
                 });
             }

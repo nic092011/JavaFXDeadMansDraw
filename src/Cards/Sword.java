@@ -52,7 +52,7 @@ public Image getImage() {
 
     @Override
     public String getAbilityString() {
-        return "Sword - Steal a card from the other player's Bank and put into your Play Area:";
+        return "Sword - Select a card from the opponents Bank and put into your Play Area:";
     }
 
 }
